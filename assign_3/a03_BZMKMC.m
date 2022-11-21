@@ -1,6 +1,8 @@
 clear;
 
-k = 1;
+r = 1058;
+
+k = 4;
 N = 19;  
 imgs = cell(N,1);
 
@@ -16,7 +18,6 @@ end
 len =   29.43;
 theta = 9.78;
 h = fspecial('motion', len, theta);
-
 
 % 4. identifies the regions using a texture matching algorithm (Laws filter)
 [samples, colors] = def_train_samples();
@@ -37,7 +38,7 @@ bill = cell(N,1);
 areas_in_pxls = cell(N,1);
 for i = k:N
     % processing
-    areas_in_pxls{i} = processor(imgs{i}, h, MODEL, colors, plate_mask, crop_coords_x, crop_coords_y, img_empty, i);
+    areas_in_pxls{i} = processor(imgs{i}, h, r, MODEL, colors);
     
     % bill
     areas_in_cm2{i} = areas_in_pxls{i} * pxl2cm2;

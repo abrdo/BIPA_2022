@@ -1,4 +1,4 @@
-function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs, crop_ys, img_empty, num)
+function areas_in_pxls = processor(IMG_IN, h, r, MODEL, colors)
     
     %% 2. uses an iterative deconvolution method (Richardson-Lucy)
 
@@ -14,7 +14,7 @@ function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs
 
     %% 3. applies local contrast enhancement (Wallis filter)
     
-    IMG_REC = restoration_wiener_white(IMG_IN, h, 0.001);
+    IMG_REC = restoration_wiener_white(IMG_REC, h, 0.001);
     
     figure(2)
     subplot(121)
@@ -24,17 +24,19 @@ function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs
     imshow(IMG_REC)
     title("Wallis-filtered deconvolved image")
      
-    %% plate masking, cropping, subtruct empty
-    % IMG_IN = IMG_IN - img_empty;
+    %% plate masking, cropping  
+    [cx, cy] = find_plate(IMG_REC, 1058);
+    plate_mask = get_circle_mask(r-40, cx, cy, size(IMG_REC,1), size(IMG_REC,2));
+    
     IMG_MASKED = IMG_REC .* plate_mask;
-    IMG_MASKED = IMG_MASKED(crop_xs(1):crop_xs(2), crop_ys(1):crop_ys(2), :);
-%     figure(111)
-%     imshow(IMG_MASKED)
+    IMG_MASKED = IMG_MASKED(1+cx-r : 1+cx+r,   1+cy-r : 1+cy+r, :);
+    figure(111)
+    imshow(IMG_MASKED)
     
     %% 4. identifies the regions using a texture matching algorithm (Laws filter)
     CLASSMAP = segment(IMG_MASKED, MODEL);
  
-%     figure(33)
+%     figure(22)
 %     subplot(121)
 %     imshow(IMG_MASKED)
 %     subplot(122)

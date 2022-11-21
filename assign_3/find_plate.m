@@ -1,4 +1,6 @@
 function [cx, cy] = find_plate(img, r)
+    r = r + 300;
+
     if size(size(img),2) == 3
         img = rgb2gray(img);
     end
@@ -25,14 +27,14 @@ function [cx, cy] = find_plate(img, r)
     cy = max_y;
     
     %%% SHOW %%%
-%     img(cx-10:cx+10, cy-10:cy+10) = 0;
-%     cv(cx-10:cx+10, cy-10:cy+10) = 0;
-%     
-%     
-%     figure(1);
-%     subplot(121);
-%     imagesc(img);
-%     subplot(122);
-%     imagesc(cv);    
+    img(cx-10:cx+10, cy-10:cy+10) = 0;
+    cv(cx-10:cx+10, cy-10:cy+10) = 0;
+    
+    
+    figure(1111);
+    subplot(121);
+    imagesc(img);
+    subplot(122);
+    imagesc(cv);    
 end
 

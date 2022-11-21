@@ -1,4 +1,4 @@
-function [MASK] = get_circle_mask(sx, sy, r, cx, cy)
+function [MASK] = get_circle_mask(r, cx, cy, sx, sy)
     MASK = uint8(zeros(sx, sy));
     for x = 1:sx
         for y = 1:sy
