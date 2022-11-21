@@ -42,9 +42,6 @@ function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs
 
     %% 4. identifies the regions using a texture matching algorithm (Laws filter)
     IMG_MASKED = im2uint8(IMG_MASKED);
-    
-    
-    IMG_MASKED = imread('recovered_cropped_03.jpg');
     CLASSMAP = segment(IMG_MASKED, MODEL);
     
     figure(33)
@@ -59,7 +56,7 @@ function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs
     %% 5. filters/enhances the result based on majority voting
     %  6. returns a segmented image showing the clustered region map
     
-    CLASSMAP = majority_vote(CLASSMAP, 10);
+    CLASSMAP = majority_vote(CLASSMAP, 80);
     IMG_SEGMENTED = classmap2img(CLASSMAP, colors);
     
     figure(333)
