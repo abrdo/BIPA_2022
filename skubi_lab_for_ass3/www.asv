@@ -1,0 +1,27 @@
+im = imread("gt.png");
+im = mat2gray(rgb2gray(im));
+
+
+% im = imread("sample_00.jpg");
+% im = rgb2gray(im);
+
+k1 = [0, -1, 0;
+     -1, 4, -1;
+     0, -1, 0
+    ];
+
+k = zeros(
+
+
+im1 = conv2(im, k);
+im2 = conv2(im, k);
+im3 = conv2_via_fft( k, im);
+
+
+figure(1)
+subplot(121)
+imshow(im1)
+subplot(122)
+imshow(im2)
+
+a= 1;
