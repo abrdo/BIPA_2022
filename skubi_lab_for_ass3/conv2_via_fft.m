@@ -1,6 +1,13 @@
-function cc = conv2_via_fft(a, b)
+function cc = conv2_via_fft(a, b, shape)
 % application of the Convolution Theorem
 %   zero padding applied
+%   'full' and 'same' shapes are supported. 'full' is the default
+    if nargin == 2
+        shape = 'full';
+    elseif nargin ~= 3
+        error("num of arguments must be 2 or 3");
+    end
+
     if(size(size(a),2) ~= 2 || size(size(b),2) ~= 2)
         error("matrix dimensions must be 2");
     end
@@ -11,13 +18,25 @@ function cc = conv2_via_fft(a, b)
     sby = size(b, 2);
     ss = [sax+sbx-1, say+sby-1];
     
-    aa = padarray(a, ss-[sax, say], 0, 'post');
-    bb = padarray(b, ss-[sbx, sby], 0, 'post');
+    pads_a = ss-[sax, say];
+    pads_b = ss-[sbx, sby];
+    
+    aa = padarray(a, pads_a, 0, 'post');
+    bb = padarray(b, pads_b, 0, 'post');
     
     AA = fft2(aa); 
     BB = fft2(bb); 
     
     
     cc = abs(ifft2(AA .* BB));
+    
+    
+    if strcmp(shape, "same")
+        pb = floor(pads_a/2);  % to crop from the beginning (x,y)
+        pe = ceil(pads_a/2);   % to crop from the end (x,y)
+        cc = cc(1+pb(1):end-pe(1), 1+pb(2):end-pe(2));
+    elseif ~strcmp(shape, "full")
+        error("'" + shape + "' is not supported as shape");
+    end 
 end
 

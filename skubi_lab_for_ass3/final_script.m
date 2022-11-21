@@ -33,7 +33,7 @@ R = mat2gray(rgb2gray(R));
 % 
 % 
 % T_cell = {T1, T2, T3, T4};
-% 
+%
 % R = imread('recovered_cropped_07.jpg');
 % R = rgb2gray(R);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,9 +43,9 @@ R = mat2gray(rgb2gray(R));
 
 
 
-MODEL = training_phase_o(T_cell);
+MODEL = training_phase(T_cell);
 
-GUESS = recognition_phase_o(R, MODEL);
+GUESS = recognition_phase(R, MODEL);
 disp("recognition done.")
 VOTED = majority_voting(GUESS, 6);
 disp("major voting done.")

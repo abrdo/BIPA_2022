@@ -33,15 +33,15 @@ R = mat2gray(rgb2gray(R));
 % 
 % 
 % T_cell = {T1, T2, T3, T4};
-% MODEL = training_phase(T_cell);
-% 
+%
 % R = imread('recovered_cropped_07.jpg');
 % R = rgb2gray(R);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-% process
+
+
 
 MODEL = training_phase(T_cell);
 
@@ -51,6 +51,8 @@ VOTED = majority_voting(GUESS, 6);
 disp("major voting done.")
 
 
+
+%%% SHOW %%%
 figure(1);
 subplot(2,2,1); imshow(R); title('Original input');
 subplot(2,2,3); imagesc(GUESS); axis equal off; title({'Raw output'});
