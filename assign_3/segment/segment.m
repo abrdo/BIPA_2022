@@ -6,10 +6,9 @@ function [CLASS_MAP] = segment(IMG, MODEL)
     BB = zeros(sx, sy, 9, 3);
     for k = 1:9
         for rgb = 1:3
-            B = conv2(IMG(:,:,rgb), get_laws_kernel(k), 'same');
-            B_squared_avg = conv2(B.^2, (1/(15*15))*ones(15), 'same');
-            % e = 8;  % edge expansion because of convolution -- 8 = (3-1)/2 + (15-1)/2
-            BB(:, :, k, rgb) = B_squared_avg; %(1+e:end-e, 1+e:end-e);
+            B = conv2_via_fft(IMG(:,:,rgb), get_laws_kernel(k), 'same');
+            B_squared_avg = conv2_via_fft(B.^2, (1/(15*15))*ones(15), 'same');
+            BB(:, :, k, rgb) = B_squared_avg;
         end
     end
 
@@ -19,8 +18,6 @@ function [CLASS_MAP] = segment(IMG, MODEL)
         for y = 1:sy
             for n = 1:num_of_classes
                 sum_abs_diff(n)  =  sum(abs( squeeze(BB(x,y,:,:)) - squeeze(MODEL(n,:,:)) ), 'all');
-                % I guess:   sum_abs_diff(n)  =  sum(abs(BB(x,y,:,:)) - MODEL(n,:,:);
-                % testeljuk mar le, hogy a squeezek nelkul jok e dimenziok
             end
             [minval, texture_class_index] = min(sum_abs_diff);
             CLASS_MAP(x,y) = texture_class_index;
