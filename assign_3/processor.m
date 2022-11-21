@@ -7,14 +7,13 @@ function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs
     % --- I implemented it, but it does not work.. I did not found the
     % mistake..
     
-    IMG_REC = deconvlucy(IMG_IN, h, 1);
+    %%%IMG_REC = deconvlucy(IMG_IN, h, 1);
 
 
     %% 3. applies local contrast enhancement (Wallis filter)
     
     IMG_IN = mat2gray(IMG_IN);
     IMG_REC = restoration_wiener_white(IMG_IN, h, 0.001);
-    IMG_REC = mat2gray(IMG_REC, [0, 1]);
     
     figure(1)
     subplot(121)
@@ -42,7 +41,10 @@ function areas_in_pxls = processor(IMG_IN, h, MODEL, colors, plate_mask, crop_xs
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     %% 4. identifies the regions using a texture matching algorithm (Laws filter)
+    IMG_MASKED = im2uint8(IMG_MASKED);
     
+    
+    IMG_MASKED = imread('recovered_cropped_03.jpg');
     CLASSMAP = segment(IMG_MASKED, MODEL);
     
     figure(33)

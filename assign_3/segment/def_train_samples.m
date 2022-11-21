@@ -14,7 +14,7 @@ function [samples, colors] = def_train_samples()
     samples{3} = imgs{7}(733:977, 1473:2193, :);
     samples{4} = imgs{7}(1677:2021, 1445:1929, :);
     samples{5} = imgs{1}(1685:2031, 1093:1345, :);
-    % samples{6} = uint8(zeros(100, 100, 3));
+    samples{6} = uint8(zeros(100, 100, 3));
     
     %%% SAVE %%%
 %     imwrite(samples{1}, "train_samples/1.jpg");
@@ -29,7 +29,7 @@ function [samples, colors] = def_train_samples()
     colors{3} = uint8(squeeze(mean(mean(samples{3}))));
     colors{4} = uint8(squeeze(mean(mean(samples{4}))));
     colors{5} = uint8(squeeze(mean(mean(samples{5}))));
-    % colors{6} = uint8(squeeze(mean(mean(samples{6}))));
+    colors{6} = uint8(squeeze(mean(mean(samples{6}))));
     
     %%% SHOW %%%
 %     figure(1)
