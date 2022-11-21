@@ -19,6 +19,8 @@ function [CLASS_MAP] = segment(IMG, MODEL)
         for y = 1:sy
             for n = 1:num_of_classes
                 sum_abs_diff(n)  =  sum(abs( squeeze(BB(x,y,:,:)) - squeeze(MODEL(n,:,:)) ), 'all');
+                % I guess:   sum_abs_diff(n)  =  sum(abs(BB(x,y,:,:)) - MODEL(n,:,:);
+                % testeljuk mar le, hogy a squeezek nelkul jok e dimenziok
             end
             [minval, texture_class_index] = min(sum_abs_diff);
             CLASS_MAP(x,y) = texture_class_index;
