@@ -17,16 +17,6 @@ len =   29.43;
 theta = 9.78;
 h = fspecial('motion', len, theta);
 
-% Plate masking
-r = 1058;
-cx = 1550;
-cy = 2123;
-sx = size(img_empty, 1);
-sy = size(img_empty, 2);
-plate_mask = get_circle_mask(sx, sy, r, cx, cy);
-
-crop_coords_x = [cx-r-5; cx+r+5];
-crop_coords_y = [cy-r-5; cy+r+5];
 
 % 4. identifies the regions using a texture matching algorithm (Laws filter)
 [samples, colors] = def_train_samples();
@@ -50,10 +40,9 @@ for i = k:N
     areas_in_pxls{i} = processor(imgs{i}, h, MODEL, colors, plate_mask, crop_coords_x, crop_coords_y, img_empty, i);
     
     % bill
-    for j = k:N
-        areas_in_cm2{j} = areas_in_pxls{j} * pxl2cm2;
-        bill{j} = areas_in_cm2{j} .* prices_per_100cm2 / 100;
-    end
+    areas_in_cm2{i} = areas_in_pxls{i} * pxl2cm2;
+    bill{i} = areas_in_cm2{i} .* prices_per_100cm2 / 100;
+    
     
     %%% consol display %%%
     disp("-- sample_" + sprintf('%02d', i) + " --")

@@ -1,26 +1,13 @@
-1/(15*15);
 
+A = [1, 2, 3; 4, 5, 6; 7, 8 9];
 
-img = imread("sample_01.jpg");
+[v, i] = max(A)
 
-img = img/2.311;
-
-a = uint8(9);
-
-c = double(3.121);
-
-b = double(c/double(a))
+v
+i
 
 
 
+img = imread("sample_10.jpg");
 
-A = [1 2 3; 1 2 3; 1 2 3;];
-
-
-img = rgb2gray(img);
-cv = conv2(img, A);
-
-a = 1;
-
-
-aaa = uint8(8.4)
+[cx, cy] = find_plate(img,1058);
