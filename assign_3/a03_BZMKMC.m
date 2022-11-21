@@ -1,7 +1,7 @@
 clear;
 
-k = 3;
-N = 3;  
+k = 1;
+N = 19;  
 imgs = cell(N,1);
 
 % 1.a loading
@@ -32,33 +32,33 @@ crop_coords_y = [cy-r-5; cy+r+5];
 [samples, colors] = def_train_samples();
 MODEL = train(samples);
 
-% processing
-areas_in_pxls = cell(N,1);
-for i = k:N
-    areas_in_pxls{i} = processor(imgs{i}, h, MODEL, colors, plate_mask, crop_coords_x, crop_coords_y, img_empty, i);
-end
-
-
 % 7. Calculates (based on area size) the price of the food.
 
 % look up table
 foods = ["fries    ", "schnitzel", "salad    ", "rice     "];
-prices_per_cm2 = [0.60; 2.00; 0.77; 0.55];
+prices_per_100cm2 = [0.60; 2.00; 0.77; 0.55];
 
 pxl2cm2 = 25.0 / (2*r);
 
 areas_in_cm2 = cell(N,1);
 bill = cell(N,1);
-for i = k:N
-    areas_in_cm2{i} = areas_in_pxls{i} * pxl2cm2;
-    bill{i} = areas_in_cm2{i} .* prices_per_cm2;
-end
 
-% bill display to console
+% processing
+areas_in_pxls = cell(N,1);
 for i = k:N
+    % processing
+    areas_in_pxls{i} = processor(imgs{i}, h, MODEL, colors, plate_mask, crop_coords_x, crop_coords_y, img_empty, i);
+    
+    % bill
+    for j = k:N
+        areas_in_cm2{j} = areas_in_pxls{j} * pxl2cm2;
+        bill{j} = areas_in_cm2{j} .* prices_per_100cm2 / 100;
+    end
+    
+    %%% consol display %%%
     disp("-- sample_" + sprintf('%02d', i) + " --")
     for j = 1:size(bill{i}, 1)
-        disp(foods(j) + "        " + areas_in_cm2{i}(j) + "   cm2" + "        " + prices_per_cm2(j) + "   eur/cm2" + "        " + bill{i}(j) + "   eur")
+        disp(foods(j) + "        " + areas_in_cm2{i}(j) + "   cm2" + "        " + prices_per_100cm2(j) + "   eur/100cm2" + "        " + bill{i}(j) + "   eur")
     end
     disp("--------")
     disp("SUM:          " + sum(bill{i}) + "   eur")

@@ -28,8 +28,8 @@ function [samples, colors] = def_train_samples()
     colors{2} = uint8(squeeze(mean(mean(samples{2}))));
     colors{3} = uint8(squeeze(mean(mean(samples{3}))));
     colors{4} = uint8(squeeze(mean(mean(samples{4}))));
-    colors{5} = uint8(squeeze(mean(mean(samples{5}))));
-    colors{6} = uint8(squeeze(mean(mean(samples{6}))));
+    colors{5} = [255; 255; 255];  % plate
+    colors{6} = [255; 255; 255];  % mask
     
     %%% SHOW %%%
 %     figure(1)
