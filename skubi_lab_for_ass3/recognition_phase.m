@@ -4,8 +4,8 @@ function ClassMap = recognition_phase(I, MODEL)
     N = 1/(15*15) * ones(15);
     sum_abs_diff = zeros(size(MODEL,1),1); % number of textures
     for k=1:9
-        B = conv2(I,laws_kernel(k),'same');
-        BB(:,:,k) = conv2(B.^2,N,'same');
+        B = conv2_via_fft(I,laws_kernel(k),'same');
+        BB(:,:,k) = conv2_via_fft(B.^2,N,'same');
     end
     for y=1:size(I,1)
         for x=1:size(I,2)

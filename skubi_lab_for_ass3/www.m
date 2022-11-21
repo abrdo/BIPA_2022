@@ -1,9 +1,9 @@
-im = imread("gt.png");
-im = mat2gray(rgb2gray(im));
+imi = imread("gt.png");
+imi = mat2gray(rgb2gray(imi));
 
 
-% im = imread("sample_00.jpg");
-% im = rgb2gray(im);
+im = imread("sample_00.jpg");
+im = rgb2gray(im);
 
 k1 = [0, -1, 0;
      -1, 4, -1;
@@ -19,7 +19,7 @@ k(75,75) = 1;
 
 % im1 = conv2(im, k);
 % im2 = conv2(im, k);
-im3 = conv2_via_fft( im(2:end, 2:end));
+im3 = conv2_via_fft(im, k1, 'same');
 
 
 figure(1)
